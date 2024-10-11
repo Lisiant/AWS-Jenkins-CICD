@@ -26,10 +26,13 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy') {
+        
+        stage('Upload to S3') {
             steps {
-                echo 'Deployment Stage'
+                script {
+                    // 빌드된 Jar 파일을 S3로 업로드
+                    sh 'aws s3 cp build/libs/step18_empApp-0.0.1-SNAPSHOT.jar s3://ce09-bucket-02/'
+                }
             }
         }
     }
