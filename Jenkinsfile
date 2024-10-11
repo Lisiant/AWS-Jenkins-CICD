@@ -14,10 +14,6 @@ pipeline {
         stage('Upload to S3') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'RDS_URL', variable: 'RDS_URL'),
-                                     string(credentialsId: 'RDS_USERNAME', variable: 'RDS_USERNAME'),
-                                     string(credentialsId: 'RDS_PASSWORD', variable: 'RDS_PASSWORD')]) {
-                    
                     // 빌드된 Jar 파일을 S3로 업로드
                         sh 'aws s3 cp build/libs/step18_empApp-0.0.1-SNAPSHOT.jar s3://ce09-bucket-02/'
                     }
