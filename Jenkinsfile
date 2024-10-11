@@ -5,7 +5,6 @@ pipeline {
         stage('Fetch Secrets') {
             steps {
                 script {
-                    def rdsCredentials = sh(script: 'aws secretsmanager get-secret-value --secret-id <YOUR_SECRET_ID> --query SecretString --output text', returnStdout: true).trim()
                     env.RDS_URL = rdsCredentials['url']
                     env.RDS_USERNAME = rdsCredentials['username']
                     env.RDS_PASSWORD = rdsCredentials['password']
