@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // 빌드 단계에서 환경 변수를 이용하여 빌드 수행
-                    sh "./gradlew build -Drds.url=$RDS_URL -Drds.username=$RDS_USERNAME -Drds.password=$RDS_PASSWORD"
+                    sh "./gradlew build -Drds.url=${env.RDS_URL} -Drds.username=${env.RDS_USERNAME} -Drds.password=${env.RDS_PASSWORD}"
                 }
             }
         }
