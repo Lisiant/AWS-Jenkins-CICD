@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-      AWS_ACCESS_KEY = credentials('awsAccessKey')
-      AWS_SECRET_ACCESS_KEY = credentials('awsSecretAccessKey')
+      AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY')
+      AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
       AWS_DEFAULT_REGION = 'ap-northeast-2'
       HOME = '.' // Avoid npm root owned
     }
