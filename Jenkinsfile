@@ -5,26 +5,31 @@ pipeline {
         stage('Fetch Secrets') {
             steps {
                 script {
-                    env.RDS_URL = credentials['RDS_URL']
-                    env.RDS_USERNAME = credentials['RDS_USERNAME']
-                    env.RDS_PASSWORD = credentials['RDS_PASSWORD']
+                    // Secret Text로 RDS_URL, RDS_USERNAME, RDS_PASSWORD 불러오기
+                    withCredentials([string(credentialsId: 'RDS_URL', variable: 'RDS_URL'),
+                                     string(credentialsId: 'RDS_USERNAME', variable: 'RDS_USERNAME'),
+                                     string(credentialsId: 'RDS_PASSWORD', variable: 'RDS_PASSWORD')]) {
+                        
+                        // 자격 증명 출력 (테스트용, 실제 배포 시 민감 정보 출력하지 않도록 주의)
+                        echo "RDS URL: $RDS_URL"
+                        echo "RDS Username: $RDS_USERNAME"
+                    }
                 }
             }
         }
+
         stage('Build') {
             steps {
                 script {
-                    // Spring Boot 빌드
-                    sh './gradlew build'
+                    // 빌드 단계에서 환경 변수를 이용하여 빌드 수행
+                    sh "./gradlew build -Drds.url=$RDS_URL -Drds.username=$RDS_USERNAME -Drds.password=$RDS_PASSWORD"
                 }
             }
         }
-        stage('Upload to S3') {
+
+        stage('Deploy') {
             steps {
-                script {
-                    // 빌드된 Jar 파일을 S3로 업로드
-                    sh 'aws s3 cp build/libs/step18_empApp-0.0.1-SNAPSHOT.jar s3://ce09-bucket-02/'
-                }
+                echo 'Deployment Stage'
             }
         }
     }
