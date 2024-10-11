@@ -5,9 +5,9 @@ pipeline {
         stage('Fetch Secrets') {
             steps {
                 script {
-                    env.RDS_URL = credentials['url']
-                    env.RDS_USERNAME = credentials['username']
-                    env.RDS_PASSWORD = credentials['password']
+                    env.RDS_URL = credentials['RDS_URL']
+                    env.RDS_USERNAME = credentials['RDS_USERNAME']
+                    env.RDS_PASSWORD = credentials['RDS_PASSWORD']
                 }
             }
         }
